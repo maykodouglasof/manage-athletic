@@ -51,7 +51,7 @@ export const DataContent = styled.fieldset`
     justify-content: space-between;
     width: 100%;
     padding-bottom: 1.6rem;
-    border-bottom: 1px solid #f4c03a;
+    border-bottom: 1px solid var(--color-line-in-white);
 
     button {
       background: none;
@@ -107,14 +107,14 @@ export const SelectButton = styled.button<SelectButtonProps>`
   &.study {
     background: ${(props) =>
       props.isSelected
-        ? '#000000'
-        : '#000000'};
+        ? 'var(--color-primary)'
+        : 'var(--color-primary-lighter)'};
     border: ${(props) =>
       props.isSelected ? '2px solid var(--color-primary-darker)' : 0};
     opacity: ${(props) => (props.isSelected ? 1 : 0.9)};
 
     &:hover {
-      background: #222121;
+      background: var(--color-primary-light);
     }
   }
 
@@ -155,7 +155,7 @@ export const WarningContent = styled.footer`
   button {
     width: 100%;
     height: 5.6rem;
-    background: #000000;
+    background: var(--color-secundary);
     color: var(--color-button-text);
     border: 0;
     border-radius: 0.8rem;
@@ -168,7 +168,7 @@ export const WarningContent = styled.footer`
     margin-top: 3.2rem;
 
     &:hover {
-      background: #222121;
+      background: var(--color-secundary-dark);
     }
   }
 
