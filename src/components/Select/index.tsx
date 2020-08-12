@@ -1,28 +1,34 @@
-import React, { SelectHTMLAttributes } from 'react'
+import React, { SelectHTMLAttributes } from 'react';
 
-import './styles.css';
+import { Container } from './styles';
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  title: string;
+  name: string;
+  options: Array<{
+    value: string;
     label: string;
-    name: string;
-    options: Array<{
-      value: string;
-      label: string;
-    }>;
+  }>;
 }
 
-const Select: React.FC<SelectProps> = ({ label, name, options, ...rest }) => {
+const Select: React.FC<SelectProps> = ({ title, name, options, ...rest }) => {
   return (
-    <div className="select-block">
-        <label htmlFor={name}>{label}</label>
-        <select value="" id={name} {...rest}>
-          <option value="" disabled hidden>Selecione uma opção</option>
-          {options.map(option => {
-            return <option key={option.value} value={option.value}>{option.label}</option>
-          })}
-        </select>
-  </div>
-  )
-}
+    <Container>
+      <label htmlFor={name}>{title}</label>
+      <select {...rest} id={name}>
+        <option value="" disabled hidden>
+          Selecione uma opção
+        </option>
+        {options.map((option) => {
+          return (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          );
+        })}
+      </select>
+    </Container>
+  );
+};
 
 export default Select;

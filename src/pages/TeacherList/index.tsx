@@ -1,62 +1,107 @@
-import React, { useState, FormEvent } from 'react'
+import React, { useState, useCallback, FormEvent, useEffect } from 'react';
 
 import PageHeader from '../../components/PageHeader';
 import TeacherItem, { Teacher } from '../../components/TeacherItem';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
-import api from '../../services/api';
 
-import './styles.css';
+import rocketIcon from '../../assets/images/icons/rocket.svg';
 
-function TeacherList() {
-  const [teachers, setTeachers] = useState([]);
+import { api } from '../../services/api';
+
+import { Container, SearchForm } from './styles';
+import { useToast } from '../../hooks/toast';
+
+const TeacherList: React.FC = () => {
+  const { addToast } = useToast();
 
   const [subject, setSubject] = useState('');
   const [week_day, setWeekDay] = useState('');
   const [time, setTime] = useState('');
 
-  async function searchTeachers(e: FormEvent) {
-    e.preventDefault();
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [total, setTotal] = useState(0);
 
-    const response = await api.get('classes',{
-      params: {
-        subject,
-        week_day,
-        time
-      }
+  useEffect(() => {
+    api.get('teachers').then((response) => {
+      setTotal(response.data.total);
     });
+  }, []);
 
-    setTeachers(response.data);
-  }
+  useEffect(() => {
+    api
+      .get('/classes', {
+        params: {
+          week_day,
+          subject,
+          time,
+        },
+      })
+      .then((response) => {
+        setTeachers(response.data);
+      });
+  }, []);
 
+  const searchTeachers = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+
+      if (week_day !== '' && subject !== '' && time !== '') {
+        api
+          .get('/classes', {
+            params: {
+              week_day,
+              subject,
+              time,
+            },
+          })
+          .then((response) => {
+            setTeachers(response.data);
+          });
+      } else {
+        addToast({
+          type: 'error',
+          title: 'Erro na busca',
+          description:
+            'Ocorreu um erro na busca, preencha todos do dados para buscar.',
+        });
+      }
+    },
+    [week_day, subject, time, teachers],
+  );
   return (
-      <div id="page-teacher-list" className="container">
-        <PageHeader title="Estes são os proffys disponíveis.">
-          <form id="search-teachers" onSubmit={searchTeachers}>
-          <Select 
-            name="subject" 
-            label="Matéria" 
+    <Container>
+      <PageHeader
+        title="Esse são os proffys disponíveis."
+        titleDescription={`Nós temos ${total} Professores`}
+        titleDescriptionIcon={rocketIcon}
+      >
+        <SearchForm onSubmit={searchTeachers}>
+          <Select
+            name="subject"
+            title="Matéria"
             value={subject}
-            onChange={e => { setSubject(e.target.value)}}
+            onChange={(e) => {
+              setSubject(e.target.value);
+            }}
             options={[
               { value: 'Artes', label: 'Artes' },
-              { value: 'Biologia', label: 'Biologia' },
               { value: 'Ciências', label: 'Ciências' },
-              { value: 'Educação Física', label: 'Educação Física' },
-              { value: 'Física', label: 'Física' },
-              { value: 'Geografia', label: 'Geografia' },
-              { value: 'História', label: 'História' },
               { value: 'Português', label: 'Português' },
-              { value: 'Química', label: 'Química' }
+              { value: 'Matemática', label: 'Matemática' },
+              { value: 'Biologia', label: 'Biologia' },
+              { value: 'Geografia', label: 'Geografia' },
             ]}
           />
-          <Select 
-            name="week_day" 
-            label="Dia da semana"
+
+          <Select
+            name="week-day"
+            title="Dia da semana"
             value={week_day}
-            onChange={e => { setWeekDay(e.target.value)}} 
+            onChange={(e) => {
+              setWeekDay(e.target.value);
+            }}
             options={[
-              
               { value: '0', label: 'Domingo' },
               { value: '1', label: 'Segunda-Feira' },
               { value: '2', label: 'Terça-Feira' },
@@ -66,27 +111,33 @@ function TeacherList() {
               { value: '6', label: 'Sábado' },
             ]}
           />
-            <Input 
-              type="time" 
-              name="time" 
-              label="Hora" 
-              value={time}
-              onChange={e => { setTime(e.target.value);}}
-            />            
+          <Input
+            name="time"
+            title="Hora"
+            type="time"
+            value={time}
+            onChange={(e) => {
+              setTime(e.target.value);
+            }}
+          />
 
-            <button type="submit">
-              Buscar
-            </button>
-          </form>
-        </PageHeader>
+          <button type="submit">Buscar</button>
+        </SearchForm>
+      </PageHeader>
 
-        <main>
-          {teachers.map((teacher: Teacher)  => {
-            return <TeacherItem key={teacher.id} teacher={teacher} />
-          })}
-        </main>
-      </div>
-  )
-}
+      <main>
+        {teachers[0] ? (
+          teachers.map((teacher) => (
+            <TeacherItem key={teacher.id} teacher={teacher} />
+          ))
+        ) : (
+          <p>
+            Nenhum professor encontrado com <br />a sua pesquisa
+          </p>
+        )}
+      </main>
+    </Container>
+  );
+};
 
 export default TeacherList;

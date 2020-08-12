@@ -1,58 +1,58 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import wppIcon from '../../assets/images/icons/whatsapp.svg';
 
-import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
-import api from '../../services/api';
-
-import './styles.css';
+import { Container } from './styles';
+import { api } from '../../services/api';
 
 export interface Teacher {
-  id: number;
-  avatar: string;
-  bio: string;
+  id: string;
+  subject: string;
   cost: number;
   name: string;
-  subject: string;
+  avatar: string;
   whatsapp: string;
+  bio: string;
 }
-
 interface TeacherItemProps {
-  teacher: Teacher
+  teacher: Teacher;
 }
 
 const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
-  function createNewConnection() {
-    api.post('connections', {
-      user_id: teacher.id
-    })
-  }
+  const createNewConnection = useCallback(() => {
+    api.post('/connections', {
+      user_id: teacher.id,
+    });
+  }, [teacher.id]);
 
   return (
-    <article className="teacher-item">
+    <Container>
       <header>
-        <img src={teacher.avatar} alt={teacher.name} />
+        <img src={teacher.avatar} alt="gabriel" />
+
         <div>
           <strong>{teacher.name}</strong>
           <span>{teacher.subject}</span>
         </div>
       </header>
-
       <p>{teacher.bio}</p>
+
       <footer>
         <p>
           Preço/hora
-                <strong>{teacher.cost}</strong>
+          <strong>R${teacher.cost}</strong>
         </p>
+
         <a
-          target="_black"
+          target="_blank"
           onClick={createNewConnection}
-          href={`https://wa.me/${teacher.whatsapp}`}
+          href={`https://api.whatsapp.com/send?phone=+55${teacher.whatsapp}`}
         >
-          <img src={whatsappIcon} alt="whatsapp" />
-                Entrar em contacto
-              </a>
+          <img src={wppIcon} alt="whatsapp" />
+          Entrar em contato.
+        </a>
       </footer>
-    </article>
-  )
-}
+    </Container>
+  );
+};
 
 export default TeacherItem;

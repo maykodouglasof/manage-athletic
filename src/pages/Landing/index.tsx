@@ -1,58 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import logoImg from "../../assets/images/logo.svg";
-import landingImg from "../../assets/images/landing.svg";
+import logoImg from '../../assets/images/logoatletica.svg';
+import landingImg from '../../assets/images/programming.svg';
 
-import stydyIcons from "../../assets/images/icons/study.svg";
-import giveClassesIcon from "../../assets/images/icons/give-classes.svg";
-import purpleHeartIcon from "../../assets/images/icons/purple-heart.svg";
+import studyIcon from '../../assets/images/icons/study.svg';
+import giveClassIcon from '../../assets/images/icons/give-classes.svg';
+import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
 
-import './styles.css';
-import api from '../../services/api';
+import { Container, LogoContainer, ButtonContainer } from './styles';
+import { api } from '../../services/api';
 
-function Landing() {
-    const [totalConnections, setTotalConnections] = useState(0);
+const SignIn: React.FC = () => {
+  const [totalConnection, setTotalConnections] = useState(0);
 
-    useEffect(() => {
-        api.get('connections').then(response => {
-            const { total } = response.data;
-            
-            setTotalConnections(total);
-        })
-    },[])
+  useEffect(() => {
+    api.get('/connections').then((response) => {
+      setTotalConnections(response.data.total);
+    });
+  }, []);
 
   return (
-      <div id="page-landing">
-          <div id="page-landing-content" className="container">
-              <div className="logo-container">
-                  <img src={logoImg} alt="Proffy" />
-                  <h2>Sua conexão com a atlética.</h2>
-              </div>
+    <Container id="page-landing">
+      <div id="page-landing-content" className="container">
+        <LogoContainer className="logo-container">
+          <img src={logoImg} alt="Proffy" />
+          <h2>Sua conexão com a atlética!</h2>
+        </LogoContainer>
 
-                <img 
-                    src={landingImg} 
-                    alt="Plataforma de estudos" 
-                    className="hero-image"
-                />
+        <img
+          src={landingImg}
+          alt="Plataforma de estudos"
+          className="hero-image"
+        />
 
-                <div className="buttons-container">
-                    <Link to="/study" className="study">
-                        <img src={stydyIcons} alt="Estudar"/>
-                        Estudar
-                    </Link>
+        <ButtonContainer className="buttons-container">
+          <Link to="study" className="study">
+            <img src={studyIcon} alt="cadastrar" />
+            Cadastrar
+          </Link>
+          <Link to="give-classes" className="give-classes">
+            <img src={giveClassIcon} alt="estudar" />
+            Benefícios
+          </Link>
+        </ButtonContainer>
 
-                    <Link to="/give-classes" className="give-classes">
-                        <img src={giveClassesIcon} alt="Estudar"/>
-                        Ser associado
-                    </Link>
-                </div>
-                <span className="total-connections">
-                    Total de { totalConnections } alunos já cadastrados <img src={purpleHeartIcon} alt="Coração roxo" />
-                </span>
-          </div>
+        <span className="total-connection">
+          {`Total de ${totalConnection} alunos já cadastrados`}
+          <img src={purpleHeartIcon} alt="Coração roxo" />
+        </span>
       </div>
+    </Container>
   );
-}
+};
 
-export default Landing;
+export default SignIn;
