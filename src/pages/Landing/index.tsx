@@ -35,7 +35,7 @@ const SignIn: React.FC = () => {
         />
 
         <ButtonContainer className="buttons-container">
-          <Link to="study" className="study">
+          <Link to="signup" className="study">
             <img src={studyIcon} alt="cadastrar" />
             Cadastrar
           </Link>

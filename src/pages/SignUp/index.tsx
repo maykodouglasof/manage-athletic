@@ -98,7 +98,7 @@ const SignUp: React.FC = () => {
         singUp
         title="Que incrível ter você em nossa plataforma."
         titleDescriptionIcon={smileIcon}
-        titleDescription={`${total} usuários cadastrados !`}
+        titleDescription={`${total} usuários cadastrados!`}
       />
 
       <Content onSubmit={addNewUser}>

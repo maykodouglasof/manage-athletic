@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.header`
   display: flex;
   flex-direction: column;
-  background-color: var(--color-primary);
+  background-color: #f4c03a;
 
   @media (min-width: 700px) {
     display: flex;
@@ -17,8 +17,8 @@ export const BarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--color-text-in-primary);
-  background: var(--color-primary-darker);
+  color: #000000;
+  background: #e3b338;
   margin: 0 auto;
   padding: 1.6rem 3rem;
 
@@ -30,7 +30,7 @@ export const BarContainer = styled.div`
     font: 500 1.5rem Archivo;
     display: flex;
     align-items: center;
-    color: var(--color-button-text);
+    color: #000000;
 
     &:hover {
       opacity: 0.6;
