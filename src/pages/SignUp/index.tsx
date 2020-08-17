@@ -4,13 +4,9 @@ import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import { useToast } from '../../hooks/toast';
 
-import warningIcon from '../../assets/images/icons/warning.svg';
-import TextArea from '../../components/TextArena';
-import { api } from '../../services/api';
+import { AiOutlineExclamation } from 'react-icons/ai';
 
-import studyIcon from '../../assets/images/icons/study.svg';
-import giveClassIcon from '../../assets/images/icons/give-classes.svg';
-import smileIcon from '../../assets/images/icons/smile.svg';
+import { api } from '../../services/api';
 
 import {
   Container,
@@ -29,10 +25,8 @@ const SignUp: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password_confirmation, setPasswordConfirmation] = useState('');
-  const [avatar, setAvatar] = useState('');
+  const [github_username, setGithubUsername] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
-  const [bio, setBio] = useState('');
-  const [isTeacher, setIsTeacher] = useState(false);
 
   const [total, setTotal] = useState(0);
 
@@ -48,19 +42,17 @@ const SignUp: React.FC = () => {
       api
         .post('/users', {
           name,
-          avatar,
+          github_username,
           whatsapp,
-          bio,
           email,
           password,
-          password_confirmation,
-          is_teacher: isTeacher,
+          password_confirmation
         })
         .then(() => {
           addToast({
             type: 'success',
             title: 'Cadastro realizado.',
-            description: 'Você já pode fazer o logon no Proffy!',
+            description: 'Você já pode fazer o logon na plataforma!',
           });
 
           push('/');
@@ -76,28 +68,21 @@ const SignUp: React.FC = () => {
 
     [
       name,
-      avatar,
+      github_username,
       whatsapp,
-      bio,
       email,
       password,
       password_confirmation,
       push,
-      isTeacher,
       addToast,
     ],
   );
-
-  const toggleTeacher = useCallback(() => {
-    setIsTeacher(!isTeacher);
-  }, [isTeacher]);
 
   return (
     <Container>
       <PageHeader
         singUp
         title="Que incrível ter você em nossa plataforma."
-        titleDescriptionIcon={smileIcon}
         titleDescription={`${total} usuários cadastrados!`}
       />
 
@@ -109,6 +94,7 @@ const SignUp: React.FC = () => {
             name="name"
             title="Nome Completo"
             value={name}
+            required
             onChange={(e) => setName(e.target.value)}
           />
 
@@ -117,27 +103,22 @@ const SignUp: React.FC = () => {
             title="Email"
             type="email"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <Input
-            name="avatar"
-            title="Avatar"
-            value={avatar}
-            onChange={(e) => setAvatar(e.target.value)}
+            name="github_username" 
+            title="Usuário do Github"
+            value={github_username}
+            onChange={(e) => setGithubUsername(e.target.value)}
           />
+
           <Input
             name="whatsapp"
             title="Whatsapp"
             value={whatsapp}
             onChange={(e) => setWhatsapp(e.target.value)}
-          />
-          <TextArea
-            name="bio"
-            title="Biografia"
-            description="(Máx: 250 caractéres)"
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
           />
 
           <Input
@@ -157,30 +138,9 @@ const SignUp: React.FC = () => {
           />
         </DataContent>
 
-        <ButtonContainer className="buttons-container">
-          <SelectButton
-            type="button"
-            className="study"
-            onClick={toggleTeacher}
-            isSelected={!isTeacher}
-          >
-            <img src={studyIcon} alt="estudar" />
-            Estudante
-          </SelectButton>
-          <SelectButton
-            type="button"
-            className="give-classes"
-            onClick={toggleTeacher}
-            isSelected={isTeacher}
-          >
-            <img src={giveClassIcon} alt="estudar" />
-            Professor
-          </SelectButton>
-        </ButtonContainer>
-
         <WarningContent>
           <p>
-            <img src={warningIcon} alt="Aviso Icone" />
+            <AiOutlineExclamation size={42} />
             Importante ! <br />
             Preencha todos os dados
           </p>

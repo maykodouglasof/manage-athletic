@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AiOutlineArrowLeft, AiFillCheckSquare } from 'react-icons/ai';
 
 import logoImg from '../../assets/images/logo.svg';
 import backIcon from '../../assets/images/icons/back.svg';
@@ -33,7 +34,7 @@ const PageHeader: React.FC<IProps> = ({
     <Container>
       <BarContainer>
         <Link to="/" onClick={signOut}>
-          <img src={backIcon} alt="Voltar" />
+          <AiOutlineArrowLeft size={42} />
         </Link>
         {singUp ? (
           <p>Cadastro</p>
@@ -57,7 +58,7 @@ const PageHeader: React.FC<IProps> = ({
             {titleDescription && (
               <>
                 {titleDescriptionIcon && (
-                  <img src={titleDescriptionIcon} alt="Smile" />
+                  <AiFillCheckSquare size={42} />
                 )}
                 <p>{titleDescription}</p>
               </>
