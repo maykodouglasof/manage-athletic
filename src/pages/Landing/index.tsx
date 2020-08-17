@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { AiFillHeart, AiOutlineUserAdd, AiOutlineGift } from 'react-icons/ai';
 
 import logoImg from '../../assets/images/logoatletica.svg';
 import landingImg from '../../assets/images/programming.svg';
@@ -36,18 +37,18 @@ const SignIn: React.FC = () => {
 
         <ButtonContainer className="buttons-container">
           <Link to="signup" className="study">
-            <img src={studyIcon} alt="cadastrar" />
+          <AiOutlineUserAdd size={42} />
             Cadastrar
           </Link>
           <Link to="give-classes" className="give-classes">
-            <img src={giveClassIcon} alt="estudar" />
+            <AiOutlineGift size={42} />
             Benefícios
           </Link>
         </ButtonContainer>
 
         <span className="total-connection">
           {`Total de ${totalConnection} alunos já cadastrados`}
-          <img src={purpleHeartIcon} alt="Coração roxo" />
+          <AiFillHeart size={20} />
         </span>
       </div>
     </Container>
