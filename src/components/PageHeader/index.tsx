@@ -23,7 +23,6 @@ const PageHeader: React.FC<IProps> = ({
   children,
   description,
   secondDescription,
-  secondDescriptionIcon,
   titleDescription,
   titleDescriptionIcon,
   singUp = false,
@@ -70,7 +69,6 @@ const PageHeader: React.FC<IProps> = ({
             <p>{description}</p>
             {secondDescription && (
               <p>
-                <img src={secondDescriptionIcon} alt="Smile" />
                 {secondDescription}
               </p>
             )}

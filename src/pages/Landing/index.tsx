@@ -40,7 +40,7 @@ const SignIn: React.FC = () => {
           <AiOutlineUserAdd size={42} />
             Cadastrar
           </Link>
-          <Link to="give-classes" className="give-classes">
+          <Link to="benefits" className="give-classes">
             <AiOutlineGift size={42} />
             Benefícios
           </Link>
