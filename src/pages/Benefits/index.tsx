@@ -1,6 +1,5 @@
 import React, { useState, useCallback, FormEvent, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import { useToast } from '../../hooks/toast';
 
@@ -80,64 +79,8 @@ const Benefits: React.FC = () => {
 
   return (
     <Container>
-      <PageHeader
-        singUp
-        title="Que incrível ter você em nossa plataforma."
-        titleDescription={`${total} usuários cadastrados!`}
-      />
 
-      <Content onSubmit={addNewUser}>
-        <DataContent>
-          <legend>Seus Dados</legend>
-
-          <Input
-            name="name"
-            title="Nome Completo"
-            value={name}
-            required
-            onChange={(e) => setName(e.target.value)}
-          />
-
-          <Input
-            name="email"
-            title="Email"
-            type="email"
-            value={email}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <Input
-            name="github_username" 
-            title="Usuário do Github"
-            value={github_username}
-            onChange={(e) => setGithubUsername(e.target.value)}
-          />
-
-          <Input
-            name="whatsapp"
-            title="Whatsapp"
-            value={whatsapp}
-            onChange={(e) => setWhatsapp(e.target.value)}
-          />
-
-          <Input
-            name="password"
-            title="Senha"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <Input
-            name="password_confirmation"
-            title="Confirmação de Senha"
-            type="password"
-            value={password_confirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
-          />
-        </DataContent>
-
+      <Content>
         <WarningContent>
           <p>
             <AiOutlineExclamation size={42} />
