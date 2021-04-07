@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import {
   CButton,
   CCard,
@@ -14,8 +15,36 @@ import {
   CRow
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import useApi from '../services/api';
+import { Link } from 'react-router-dom'
 
 const Register = () => {
+  const api = useApi();
+  const history = useHistory();
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [error, setError] = useState('');
+
+  const handleRegisterButton = async () => {
+    if(name && email && cpf && password && passwordConfirm ) {
+      const result = await api.register(name, email, cpf, password, passwordConfirm);
+      console.log(result)
+      if(result.error === '') {
+        localStorage.setItem('token', result.token);
+        history.push('/login');
+      } else {
+        alert(result.error)
+        setError(result.error);
+      }
+    } else {
+      alert("Digite os dados");
+    }
+  }
+
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -28,15 +57,21 @@ const Register = () => {
                   <p className="text-muted">Faça seu cadastro agora!</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
-                      <CInputGroupText>@</CInputGroupText>
+                      <CInputGroupText>N</CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Email" />
+                    <CInput type="text" placeholder="Nome Completo" value={name} onChange={(e) => setName(e.target.value)} />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
-                      <CInputGroupText></CInputGroupText>
+                      <CInputGroupText>@</CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="CPF" />
+                    <CInput type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  </CInputGroup>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupPrepend>
+                      <CInputGroupText>C</CInputGroupText>
+                    </CInputGroupPrepend>
+                    <CInput type="text" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)}/>
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
@@ -44,7 +79,7 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Senha" />
+                    <CInput type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)}/>
                   </CInputGroup>
                   <CInputGroup className="mb-4">
                     <CInputGroupPrepend>
@@ -52,9 +87,9 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Repetir senha" />
+                    <CInput type="password" placeholder="Repetir senha" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
                   </CInputGroup>
-                  <CButton color="success" block>Ser um associado!</CButton>
+                  <CButton color="success" block onClick={() => handleRegisterButton()}>Ser um associado!</CButton>
                 </CForm>
               </CCardBody>
               {/* <CCardFooter className="p-4">

@@ -41,5 +41,9 @@ export default () => {
       let json = await request("post", "/auth/login", { email, password });
       return json;
     },
+    register: async (name, email, cpf, password, password_confirm) => {
+      let json = await request("post", "/auth/register", { name, email, cpf, password, password_confirm });
+      return json;
+    },
   };
 };
