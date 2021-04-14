@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCard,
   CCardBody,
-  CCardFooter,
   CCol,
   CContainer,
   CForm,
@@ -12,36 +10,35 @@ import {
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
-  CRow
+  CRow,
+  CFormGroup,
+  CLabel,
+  CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+
 import useApi from '../services/api';
-import { Link } from 'react-router-dom'
 
 const Register = () => {
   const api = useApi();
-  const history = useHistory();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [error, setError] = useState('');
+  const [ courseList, setCourseList ] = useState([]);
+  const [ courseId, setCourseId ] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const handleRegisterButton = async () => {
-    if(name && email && cpf && password && passwordConfirm ) {
-      const result = await api.register(name, email, cpf, password, passwordConfirm);
-      console.log(result)
-      if(result.error === '') {
-        localStorage.setItem('token', result.token);
-        history.push('/login');
-      } else {
-        alert(result.error)
-        setError(result.error);
-      }
+  useEffect(() => {
+    getCourse();
+  }, []);
+
+  const getCourse = async () => {
+    setLoading(true);
+    const result = await api.getCourses;
+    console.log(result)
+    setLoading(false);
+    if (result.error === '') {
+      setCourseList(result.list);
     } else {
-      alert("Digite os dados");
+      alert(result.error);
     }
   }
 
@@ -54,24 +51,32 @@ const Register = () => {
               <CCardBody className="p-4">
                 <CForm>
                   <h1>Cadastro</h1>
-                  <p className="text-muted">Faça seu cadastro agora!</p>
+                  <p className="text-muted">Olá, preencha todos os dados corretamente!</p>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupPrepend>
+                      <CInputGroupText>
+                        <CIcon name="cil-user" />
+                      </CInputGroupText>
+                    </CInputGroupPrepend>
+                    <CInput type="text" placeholder="Usúario" />
+                  </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>N</CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Nome Completo" value={name} onChange={(e) => setName(e.target.value)} />
+                    <CInput type="text" placeholder="Nome" />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>@</CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <CInput type="text" placeholder="Email" />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>C</CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)}/>
+                    <CInput type="text" placeholder="CPF" />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
@@ -79,7 +84,7 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <CInput type="password" placeholder="Sua senha" />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
                     <CInputGroupPrepend>
@@ -87,21 +92,29 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Repetir senha" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
+                    <CInput type="password" placeholder="Repetir senha" />
                   </CInputGroup>
-                  <CButton color="success" block onClick={() => handleRegisterButton()}>Ser um associado!</CButton>
+                  <CFormGroup>
+                    <CLabel htmlFor="course">Seu Curso</CLabel>
+                    <CSelect
+                      id="course"
+                      custom
+                      onChange={e => setCourseId(e.target.value)}
+                      value={courseId}
+                    >
+                      {courseList.map((item, index) => (
+                        <option
+                          key={index}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      ))}
+                    </CSelect>
+                  </CFormGroup>
+                  <CButton color="success" block>Ser Associado!</CButton>
                 </CForm>
               </CCardBody>
-              {/* <CCardFooter className="p-4">
-                <CRow>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-facebook mb-1" block><span>facebook</span></CButton>
-                  </CCol>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-twitter mb-1" block><span>twitter</span></CButton>
-                  </CCol>
-                </CRow>
-              </CCardFooter> */}
             </CCard>
           </CCol>
         </CRow>

@@ -28,7 +28,7 @@ const TheLayout = () => {
 
   return (
     <div className="c-app c-default-layout">
-      {!loading && (
+      {!loading &&
         <>
           <TheSidebar />
           <div className="c-wrapper">
@@ -39,7 +39,7 @@ const TheLayout = () => {
             <TheFooter />
           </div>
         </>
-      )}
+      }
     </div>
   );
 };

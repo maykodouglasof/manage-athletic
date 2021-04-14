@@ -43,6 +43,12 @@ const _nav =  [
     icon: 'cil-lock-locked'
   },
   {
+    _tag: 'CSidebarNavItem',
+    name: 'Boletos',
+    to: '/billets',
+    icon: 'cil-file',
+  },
+  {
     _tag: 'CSidebarNavTitle',
     _children: ['Dados']
   },
