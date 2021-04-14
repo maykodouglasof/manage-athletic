@@ -159,7 +159,7 @@ export default () => {
 
     getCourses: async () => {
       let token = await localStorage.getItem("token");
-      let json = await request("get", '/courses', {}, token);
+      let json = await request("get", "/courses", {});
       return json;
     },
   };

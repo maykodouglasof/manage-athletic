@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory, Link } from 'react-router-dom';
 import {
   CButton,
   CCard,
@@ -21,10 +22,17 @@ import useApi from '../services/api';
 
 const Register = () => {
   const api = useApi();
+  const history = useHistory();
 
-  const [ courseList, setCourseList ] = useState([]);
-  const [ courseId, setCourseId ] = useState('');
+  const [courseList, setCourseList] = useState([]);
+  const [courseId, setCourseId] = useState('');
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
   useEffect(() => {
     getCourse();
@@ -32,13 +40,38 @@ const Register = () => {
 
   const getCourse = async () => {
     setLoading(true);
-    const result = await api.getCourses;
-    console.log(result)
+    const result = await api.getCourses();
     setLoading(false);
     if (result.error === '') {
       setCourseList(result.list);
     } else {
       alert(result.error);
+    }
+  }
+
+  const handleSave = async () => {
+    if (name && username && email && cpf && password && passwordConfirm) {
+      setLoading(true);
+      let result;
+      let data = {
+        username: username,
+        name: name,
+        email: email,
+        cpf: cpf,
+        password: password,
+        password_confirm: passwordConfirm,
+        id_course: courseId
+      }
+      const result = await api.register(data);
+      setLoading(false)
+      if (result.error === "") {
+        localStorage.setItem('token', result.token);
+        history.push('/');
+      } else {
+        alert(result.error);
+      }
+    } else {
+      alert("Preencha os campos!")
     }
   }
 
@@ -58,25 +91,43 @@ const Register = () => {
                         <CIcon name="cil-user" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Usúario" />
+                    <CInput
+                    type="text"
+                    placeholder="Usúario"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>N</CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Nome" />
+                    <CInput 
+                    type="text" 
+                    placeholder="Nome"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>@</CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Email" />
+                    <CInput 
+                    type="text" 
+                    placeholder="Email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>C</CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="CPF" />
+                    <CInput type="text" placeholder="CPF"
+                    value={cpf}
+                    onChange={e => setCpf(e.target.value)}
+                    />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
@@ -84,7 +135,10 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Sua senha" />
+                    <CInput type="password" placeholder="Sua senha"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                     />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
                     <CInputGroupPrepend>
@@ -92,7 +146,10 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Repetir senha" />
+                    <CInput type="password" placeholder="Repetir senha"
+                    value={passwordConfirm}
+                    onChange={e => setPasswordConfirm(e.target.value)} 
+                    />
                   </CInputGroup>
                   <CFormGroup>
                     <CLabel htmlFor="course">Seu Curso</CLabel>
@@ -101,6 +158,7 @@ const Register = () => {
                       custom
                       onChange={e => setCourseId(e.target.value)}
                       value={courseId}
+                      disabled={courseList.length === 0}
                     >
                       {courseList.map((item, index) => (
                         <option
@@ -112,7 +170,9 @@ const Register = () => {
                       ))}
                     </CSelect>
                   </CFormGroup>
-                  <CButton color="success" block>Ser Associado!</CButton>
+                  <CButton color="success" block
+                    onClick={handleSave}
+                  >Ser Associado!</CButton>
                 </CForm>
               </CCardBody>
             </CCard>
