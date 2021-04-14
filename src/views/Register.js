@@ -52,7 +52,6 @@ const Register = () => {
   const handleSave = async () => {
     if (name && username && email && cpf && password && passwordConfirm) {
       setLoading(true);
-      let result;
       let data = {
         username: username,
         name: name,
