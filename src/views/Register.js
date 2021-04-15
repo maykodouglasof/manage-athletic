@@ -33,6 +33,7 @@ const Register = () => {
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     getCourse();
@@ -50,7 +51,7 @@ const Register = () => {
   }
 
   const handleSave = async () => {
-    if (name && username && email && cpf && password && passwordConfirm) {
+    if (email) {
       setLoading(true);
       let data = {
         username: username,
@@ -84,6 +85,9 @@ const Register = () => {
                 <CForm>
                   <h1>Cadastro</h1>
                   <p className="text-muted">Olá, preencha todos os dados corretamente!</p>
+                  {error !== '' &&
+                      <CAlert color="danger">{error}</CAlert>
+                    }
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>
