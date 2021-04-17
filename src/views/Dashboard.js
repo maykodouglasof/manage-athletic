@@ -23,7 +23,7 @@ const Dashboard = () => {
   return (
     <>
       <WidgetsDropdown />
-      <CCard>
+      {/* <CCard>
         <CCardBody>
           <CRow>
             <CCol sm="5">
@@ -549,7 +549,7 @@ const Dashboard = () => {
             </CCardBody>
           </CCard>
         </CCol>
-      </CRow>
+      </CRow> */}
     </>
   )
 }

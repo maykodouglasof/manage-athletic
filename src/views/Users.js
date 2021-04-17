@@ -21,9 +21,11 @@ export default () => {
   const [modalDateField, setModalDateField] = useState('');
 
   const fields = [
-    { label: 'Unidade', key: 'name_unit', sorter: false },
-    { label: 'Área', key: 'name_area', sorter: false },
-    { label: 'Data da Reserva', key: 'reservation_date' },
+    { label: 'Id', key: 'id', sorter: false },
+    { label: 'Nome', key: 'name' },
+    { label: 'Email', key: 'email' },
+    { label: 'Usuário', key: 'username' },
+    { label: 'Admin', key: 'admin' },
     { label: 'Ações', key: 'actions', _style: { width: '1px' }, sorter: false, filter: false }
   ];
 
@@ -35,7 +37,7 @@ export default () => {
 
   const getList = async () => {
     setLoading(true);
-    const result = await api.getReservations();
+    const result = await api.getUsers();
     setLoading(false);
     if (result.error === '') {
       setList(result.list);
@@ -131,7 +133,7 @@ export default () => {
                 disabled={modalUnitList.length === 0 || modalAreaList.lenght === 0}
               >
                 <CIcon name="cil-check" />
-                Nova Reserva
+                Novo Usuário
             </CButton>
 
             </CCardHeader>

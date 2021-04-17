@@ -8,40 +8,40 @@ const _nav =  [
     to: '/dashboard',
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>
   },
-  {
-    _tag: 'CSidebarNavTitle',
-    _children: ['Gestão']
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Avisos',
-    to: '/wall',
-    icon: 'cil-warning',
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Documentos',
-    to: '/documents',
-    icon: 'cil-file',
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Reservas',
-    to: '/reservations',
-    icon: 'cil-calendar',
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Ocorrências',
-    to: '/warnings',
-    icon: 'cil-bell',
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Achados e Perdidos',
-    to: '/foundandlost',
-    icon: 'cil-lock-locked'
-  },
+  // {
+  //   _tag: 'CSidebarNavTitle',
+  //   _children: ['Gestão']
+  // },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Avisos',
+  //   to: '/wall',
+  //   icon: 'cil-warning',
+  // },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Documentos',
+  //   to: '/documents',
+  //   icon: 'cil-file',
+  // },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Reservas',
+  //   to: '/reservations',
+  //   icon: 'cil-calendar',
+  // },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Ocorrências',
+  //   to: '/warnings',
+  //   icon: 'cil-bell',
+  // },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Achados e Perdidos',
+  //   to: '/foundandlost',
+  //   icon: 'cil-lock-locked'
+  // },
   {
     _tag: 'CSidebarNavItem',
     name: 'Boletos',
@@ -58,18 +58,18 @@ const _nav =  [
     to: '/users',
     icon: 'cil-people'
   },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Unidades',
-    to: '/units',
-    icon: 'cil-home'
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Àreas Comuns',
-    to: '/commonareas',
-    icon: 'cil-paperclip'
-  },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Unidades',
+  //   to: '/units',
+  //   icon: 'cil-home'
+  // },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Àreas Comuns',
+  //   to: '/commonareas',
+  //   icon: 'cil-paperclip'
+  // },
   {
     _tag: 'CSidebarNavTitle',
     _children: ['Configurações']

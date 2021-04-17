@@ -1,5 +1,5 @@
-const baseUrl = "https://apiatletica.herokuapp.com/api";
-// const baseUrl = "http://127.0.0.1:8000/api";
+// const baseUrl = "https://apiatletica.herokuapp.com/api";
+const baseUrl = "http://127.0.0.1:8000/api";
 
 const request = async (method, endpoint, params, token = null) => {
   method = method.toLowerCase();
@@ -43,7 +43,7 @@ export default () => {
       return json;
     },
     register: async (data) => {
-      let json = await request("post", "/auth/register", { data });
+      let json = await request("post", "/auth/register", data);
       return json;
     },
     logout: async () => {
@@ -160,6 +160,11 @@ export default () => {
     getCourses: async () => {
       let token = await localStorage.getItem("token");
       let json = await request("get", "/courses", {});
+      return json;
+    },
+    getUsers: async () => {
+      let token = await localStorage.getItem("token");
+      let json = await request("get", "/users", {}, token);
       return json;
     },
   };

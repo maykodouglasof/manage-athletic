@@ -5,7 +5,7 @@ const Logout = React.lazy(() => import('./views/Logout'));
 const Wall = React.lazy(() => import('./views/Wall'));
 const Documents = React.lazy(() => import('./views/Documents'));
 const Reservations = React.lazy(() => import('./views/Reservations'));
-const User = React.lazy(() => import('./views/User'));
+const Users = React.lazy(() => import('./views/Users'));
 const Profile = React.lazy(() => import('./views/Profile'));
 const Billets = React.lazy(() => import('./views/Billets'));
 
@@ -17,7 +17,7 @@ const routes = [
   { path: '/documents', name: 'Documents', component: Documents },
   { path: '/reservations', name: 'Reservations', component: Reservations },
   { path: '/profile', name: 'Profile', component: Profile },
-  { path: '/user', name: 'User', component: User },
+  { path: '/users', name: 'Users', component: Users },
   { path: '/billets', name: 'Billets', component: Billets },
 ];
 

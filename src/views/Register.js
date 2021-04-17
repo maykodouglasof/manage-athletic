@@ -26,7 +26,7 @@ const Register = () => {
   const history = useHistory();
 
   const [courseList, setCourseList] = useState([]);
-  const [courseId, setCourseId] = useState('');
+  const [courseId, setCourseId] = useState(0);
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
@@ -46,6 +46,7 @@ const Register = () => {
     setLoading(false);
     if (result.error === '') {
       setCourseList(result.list);
+
     } else {
       alert(result.error);
     }
@@ -53,6 +54,7 @@ const Register = () => {
 
   const handleSave = async () => {
     if (email) {
+      let admin = '0';
       setLoading(true);
       let data = {
         username: username,
@@ -61,7 +63,8 @@ const Register = () => {
         cpf: cpf,
         password: password,
         password_confirm: passwordConfirm,
-        id_course: courseId
+        id_course: courseId,
+        admin: admin
       }
       const result = await api.register(data);
       setLoading(false)
@@ -176,7 +179,9 @@ const Register = () => {
                   </CFormGroup>
                   <CButton color="success" block
                     onClick={handleSave}
-                  >Ser Associado!</CButton>
+                  >
+                    {loading ? "Carregando..." : "Ser Associado!"}
+                  </CButton>
                 </CForm>
               </CCardBody>
             </CCard>
