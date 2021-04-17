@@ -18,7 +18,7 @@ const request = async (method, endpoint, params, token = null) => {
       break;
   }
 
-  let headers = { "Content-Type": "application/json" };
+  let headers = { "Content-Type": "application/json", "Accept": "application/json" };
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
@@ -36,6 +36,7 @@ export default () => {
     validateToken: async () => {
       let token = await localStorage.getItem("token");
       let json = await request("post", "/auth/validate", {}, token);
+      console.log(json)
       return json;
     },
     login: async (cpf, password) => {
