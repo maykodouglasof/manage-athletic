@@ -1,5 +1,5 @@
-// const baseUrl = "https://apiatletica.herokuapp.com/api";
-const baseUrl = "http://127.0.0.1:8000/api";
+const baseUrl = "https://apiatletica.herokuapp.com/api";
+// const baseUrl = "http://127.0.0.1:8000/api";
 
 const request = async (method, endpoint, params, token = null) => {
   method = method.toLowerCase();
